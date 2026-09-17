@@ -1,0 +1,85 @@
+name: Notify Teams on Commit
+ 
+on:
+  push:
+ 
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+ 
+    steps:
+      - name: Send Teams Adaptive Card
+        env:
+          ACTOR: ${{ github.actor }}
+          BRANCH: ${{ github.ref_name }}
+          COMPARE_URL: ${{ github.event.compare }}
+          WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          COMMITS_JSON: ${{ toJson(github.event.commits) }}
+        run: |
+          COMMITS=$(echo "$COMMITS_JSON" | jq -r '
+            map("• `" + (.id[0:7]) + "` - " + .message + " (" + .author.name + ")")
+            | join("\n")
+          ')
+ 
+          PAYLOAD=$(jq -n \
+            --arg actor "$ACTOR" \
+            --arg branch "$BRANCH" \
+            --arg commits "$COMMITS" \
+            --arg url "$COMPARE_URL" \
+            '{
+              type: "message",
+              attachments: [
+                {
+                  contentType: "application/vnd.microsoft.card.adaptive",
+                  content: {
+                    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                    type: "AdaptiveCard",
+                    version: "1.4",
+                    body: [
+                      {
+                        type: "TextBlock",
+                        text: "🚀 New Push to GitHub",
+                        weight: "Bolder",
+                        size: "Medium"
+                      },
+                      {
+                        type: "FactSet",
+                        facts: [
+                          {
+                            title: "Pushed By",
+                            value: $actor
+                          },
+                          {
+                            title: "Branch",
+                            value: $branch
+                          }
+                        ]
+                      },
+                      {
+                        type: "TextBlock",
+                        text: "Commits",
+                        weight: "Bolder",
+                        spacing: "Medium"
+                      },
+                      {
+                        type: "TextBlock",
+                        text: $commits,
+                        wrap: true
+                      }
+                    ],
+                    actions: [
+                      {
+                        type: "Action.OpenUrl",
+                        title: "View Push",
+                        url: $url
+                      }
+                    ]
+                  }
+                }
+              ]
+            }')
+ 
+          curl --fail -s \
+            -H "Content-Type: application/json" \
+            -d "$PAYLOAD" \
+            "$WEBHOOK_URL"
