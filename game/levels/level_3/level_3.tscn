@@ -1,0 +1,166 @@
+[gd_scene format=3 uid="uid://cqaekep4sk0j6"]
+
+[ext_resource type="Script" uid="uid://bdhi2qk6hvgy8" path="res://game/scripts/controllers/StageRotator.gd" id="1_4rkpl"]
+[ext_resource type="Texture2D" uid="uid://oy8cxp2j2s80" path="res://icon.svg" id="1_yq07h"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3f7wr"]
+size = Vector2(300, 30)
+
+[sub_resource type="BoxMesh" id="BoxMesh_uvm4r"]
+size = Vector3(300, 30, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4rkpl"]
+size = Vector2(400, 30)
+
+[sub_resource type="BoxMesh" id="BoxMesh_u8bfo"]
+size = Vector3(400, 30, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r4ehn"]
+size = Vector2(270, 30)
+
+[sub_resource type="BoxMesh" id="BoxMesh_012w6"]
+size = Vector3(270, 30, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qr57w"]
+size = Vector2(225, 30)
+
+[sub_resource type="BoxMesh" id="BoxMesh_nwjup"]
+size = Vector3(225, 30, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s877v"]
+size = Vector2(225, 30)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bxeiu"]
+size = Vector3(225, 30, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yq07h"]
+size = Vector2(80, 20)
+
+[sub_resource type="BoxMesh" id="BoxMesh_4rkpl"]
+size = Vector3(80, 20, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u8bfo"]
+size = Vector2(144, 30)
+
+[sub_resource type="BoxMesh" id="BoxMesh_r4ehn"]
+size = Vector3(150, 30, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_012w6"]
+size = Vector2(118, 50)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qr57w"]
+size = Vector3(120, 50, 1)
+
+[node name="Level3" type="Node2D" unique_id=1384465659]
+position = Vector2(380, 577)
+script = ExtResource("1_4rkpl")
+
+[node name="LeftWall" type="StaticBody2D" parent="." unique_id=1836365264]
+position = Vector2(-192, 12)
+rotation = 1.5707964
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall" unique_id=1392956980]
+shape = SubResource("RectangleShape2D_3f7wr")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="LeftWall" unique_id=1577243642]
+mesh = SubResource("BoxMesh_uvm4r")
+texture = ExtResource("1_yq07h")
+
+[node name="RightWall" type="StaticBody2D" parent="." unique_id=801777599]
+position = Vector2(178, 12)
+rotation = -1.5707964
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall" unique_id=1525693552]
+shape = SubResource("RectangleShape2D_3f7wr")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="RightWall" unique_id=1274674950]
+mesh = SubResource("BoxMesh_uvm4r")
+texture = ExtResource("1_yq07h")
+
+[node name="TopWall" type="StaticBody2D" parent="." unique_id=408226766]
+position = Vector2(-7, -153)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TopWall" unique_id=1661884083]
+shape = SubResource("RectangleShape2D_4rkpl")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="TopWall" unique_id=1194747489]
+mesh = SubResource("BoxMesh_u8bfo")
+texture = ExtResource("1_yq07h")
+
+[node name="BottomWall" type="StaticBody2D" parent="." unique_id=1819748453]
+position = Vector2(28, 147)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BottomWall" unique_id=946400011]
+shape = SubResource("RectangleShape2D_r4ehn")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="BottomWall" unique_id=1549725550]
+mesh = SubResource("BoxMesh_012w6")
+texture = ExtResource("1_yq07h")
+
+[node name="InnerLeftWall" type="StaticBody2D" parent="." unique_id=541414812]
+position = Vector2(-92, 19.5)
+rotation = 1.5707964
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InnerLeftWall" unique_id=112562916]
+shape = SubResource("RectangleShape2D_qr57w")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="InnerLeftWall" unique_id=1676194576]
+mesh = SubResource("BoxMesh_nwjup")
+texture = ExtResource("1_yq07h")
+
+[node name="InnerTopWall" type="StaticBody2D" parent="." unique_id=1074567934]
+position = Vector2(5.5, -78)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InnerTopWall" unique_id=1574790511]
+shape = SubResource("RectangleShape2D_s877v")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="InnerTopWall" unique_id=1865124091]
+mesh = SubResource("BoxMesh_bxeiu")
+texture = ExtResource("1_yq07h")
+
+[node name="RandomWall1" type="StaticBody2D" parent="." unique_id=2118226793]
+position = Vector2(38, -23)
+rotation = 1.5707964
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RandomWall1" unique_id=1804370485]
+shape = SubResource("RectangleShape2D_yq07h")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="RandomWall1" unique_id=510874005]
+mesh = SubResource("BoxMesh_4rkpl")
+texture = ExtResource("1_yq07h")
+
+[node name="RandomWall2" type="StaticBody2D" parent="." unique_id=731977540]
+position = Vector2(-22, 42)
+rotation = 1.5707964
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RandomWall2" unique_id=2037493044]
+shape = SubResource("RectangleShape2D_yq07h")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="RandomWall2" unique_id=620588590]
+mesh = SubResource("BoxMesh_4rkpl")
+texture = ExtResource("1_yq07h")
+
+[node name="RandomWall3" type="StaticBody2D" parent="." unique_id=1536056951]
+position = Vector2(43, 92)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RandomWall3" unique_id=501886562]
+position = Vector2(-3, 0)
+shape = SubResource("RectangleShape2D_u8bfo")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="RandomWall3" unique_id=975934027]
+position = Vector2(-2.5, 0)
+scale = Vector2(0.96666664, 1)
+mesh = SubResource("BoxMesh_r4ehn")
+texture = ExtResource("1_yq07h")
+
+[node name="RandomWall4" type="StaticBody2D" parent="." unique_id=512550079]
+position = Vector2(138, 32)
+rotation = 1.5707964
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RandomWall4" unique_id=1013041722]
+position = Vector2(1, 0)
+shape = SubResource("RectangleShape2D_012w6")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="RandomWall4" unique_id=1207632033]
+mesh = SubResource("BoxMesh_qr57w")
+texture = ExtResource("1_yq07h")
