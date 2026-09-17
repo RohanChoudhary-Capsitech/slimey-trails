@@ -48,4 +48,4 @@ func _process(delta: float) -> void:
 
 func _check_idle() -> void:
 	if _target == null and _shake_time <= 0.0:
-		set_process(false)   # nothing to compute — save the frame budget
+		set_process(false)   # nothing to compute — save the frame budget #testingwebhook
