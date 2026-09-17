@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://bc0g1lkiy84al"]
+
+[ext_resource type="Script" uid="uid://c3alas7vxi8ya" path="res://game/levels/level_scene.gd" id="1_vn7o3"]
+[ext_resource type="Script" uid="uid://6vp1c7hd5jc0" path="res://game/scripts/controllers/CameraController.gd" id="2_jirdo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rkiba"]
+size = Vector2(200, 20)
+
+[node name="Level1" type="Node2D" unique_id=506328021]
+script = ExtResource("1_vn7o3")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=501194722]
+position = Vector2(370, 637)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=980504944]
+shape = SubResource("RectangleShape2D_rkiba")
+
+[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D" unique_id=2140558541]
+color = Color(0.42352942, 1, 1, 1)
+polygon = PackedVector2Array(-100, -10, 101, -10, 101, 10, -100, 10)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1562749268]
+script = ExtResource("2_jirdo")
