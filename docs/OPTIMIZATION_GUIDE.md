@@ -37,13 +37,14 @@ through direct node references — it's routed through a single connection point
 
 - Each node/script owns its own setup logic — no external code is required to
   initialize it.
-- The single connection point for all systems is **`ServiceLocator`**
-  (`game/autoloads/ServiceLocator.gd`) — this template's equivalent of
-  the "Game Manager singleton." Managers `register()` themselves in `_ready()`;
-  controllers `get_service()` to resolve dependencies.
-- This keeps systems decoupled: any node can be restructured, moved, or replaced
-  later without breaking other systems, since nothing holds direct references to
-  internal node structure.
+- The core connection point for all game logic is **`GameService`**
+  (`game/autoloads/GameService.gd`) — this template's equivalent of
+  the "Game Manager singleton." Managers are initialized directly by `GameService`;
+  controllers access them via `GameService.manager_name`.
+- A separate connection point, **`BackendService`** (`game/autoloads/BackendService.gd`),
+  handles initialization of all 3rd-party services (Firebase, Ads, GameAnalytics, Meta).
+- This keeps systems decoupled and separates game logic (handled by game devs) from
+  backend logic (handled by backend devs). The **`GameBus`** acts as a common event-driven bridge between `BackendService` and `GameService` for cross-communication that doesn't require direct dependencies.
 
 ### Sub-managers under the root singleton
 
@@ -58,10 +59,9 @@ Why: decoupled sub-managers mean any single system (e.g. Save Manager) can be
 rewritten or swapped without touching Sound, Haptics, or Event Bus code —
 restructuring stays cheap as the project grows.
 
-**Bootstrap wiring:** these managers are plain `Node`s, not autoloads (only
-`ServiceLocator`, `GameBus`, `GameConfig`, `Logger` are autoloaded — see
-`project.godot`). Add one instance of each manager as a child of your root/
-bootstrap scene; each registers itself with `ServiceLocator` in `_ready()`.
+**Bootstrap wiring:** these managers are instantiated directly inside `GameService.gd`'s `_ready()` function.
+(only `GameService` and `BackendService` are autoloaded — see
+`project.godot`). Controllers can simply access them via `GameService.sound` or `GameService.save`.
 
 ---
 
@@ -76,14 +76,14 @@ splits by anything other than type is `scenes/ui/`, which splits by fidelity
 
 ```
 game/
-├─ autoloads/                  ServiceLocator, GameBus, GameConfig, Logger
+├─ autoloads/                  GameService, BackendService, GameBus, GameConfig, Logger
 ├─ scripts/
 │  ├─ managers/                game_manager, sound_manager, haptics_handler,
 │  │                           save_manager, scene_manager, ui_manager, ...
 │  ├─ controllers/             nodes/ui equivalent
 │  └─ utils/
 ├─ scenes/
-│  ├─ boot/                    bootstrap scene — wires every manager
+│  ├─ boot/                    initial entry point (e.g. splash screen)
 │  ├─ home/
 │  ├─ gameplay/                main_scenes equivalent
 │  ├─ loading/
@@ -146,7 +146,7 @@ game/
 ## §6 Dependency Injection & Code Principles
 
 Every script self-initializes, but when it needs a reference to another system,
-that reference is obtained via dependency injection from `ServiceLocator` —
+that reference is obtained via dependency injection from `GameService` —
 **never** through a direct node reference/path (`get_node("../../Panel/Sound")`).
 
 ### SOLID & DRY — strictly enforced
@@ -171,7 +171,7 @@ approach:
   every call/frame.
 - Batch or amortize heavy one-off operations rather than blocking a single frame.
 
-**Implemented in:** `ServiceLocator.gd` (DI hub), `Logger.gd` (O(1) level gate,
+**Implemented in:** `GameService.gd` (DI hub), `Logger.gd` (O(1) level gate,
 cached tag array), `PlatformUtils.gd` (cached platform detection),
 `SaveManager.gd` / `SceneManager.gd` (O(1) Dictionary caches).
 
@@ -199,14 +199,14 @@ and `assets/backgrounds/` so nothing has to be re-imported later.
 | Concern | Technique | Benefit |
 |---|---|---|
 | Textures | Atlas = scene-local & animation only; reusable art = single sprite | Avoids forcing whole atlas into VRAM for shared assets |
-| Architecture | Layered monolith, self-initializing nodes, single `ServiceLocator` | Decoupled code, cheap restructuring |
+| Architecture | Layered monolith, self-initializing nodes, `GameService` / `BackendService` | Decoupled code, separation of game vs backend concerns |
 | Sub-systems | Sound / Event Bus / Haptics / Save as sub-managers | Isolated, swappable systems |
 | Folders | `assets/` organized by type: atlases, single, backgrounds | Predictable, scalable project layout |
 | CPU (idle nodes) | Disable process mode on off-screen, non-singleton nodes | Lower per-frame CPU cost |
 | Small panels | Instantiate on demand, free after close | Clean VRAM, no idle instances |
 | Big scenes | Preload resource, instantiate only when needed | Avoids background CPU cost while still avoiding load stalls |
 | Large images | VRAM compression; Basis Universal for >10 MB | Smaller disk size and lower VRAM footprint |
-| Dependencies | Self-init own state; inject external refs via `ServiceLocator` | Swappable, testable, loosely-coupled nodes |
+| Dependencies | Inject external refs via `GameService` properties | Swappable, testable, loosely-coupled nodes |
 | Code quality | Strict SOLID (esp. Single Responsibility) & DRY | Prevents architecture decay as project scales |
 | Algorithms | Lowest practical time complexity for long/batch operations | Avoids frame drops and CPU spikes on heavy operations |
 

@@ -12,7 +12,7 @@ var _sfx_pool:     Array[AudioStreamPlayer] = []
 const _POOL_SIZE := 8
 
 func _ready() -> void:
-	ServiceLocator.register(&"AudioManager", self)
+
 	_setup_music_player()
 	_setup_sfx_pool()
 
@@ -76,7 +76,7 @@ func _get_free_sfx_player() -> AudioStreamPlayer:
 	for p in _sfx_pool:
 		if not p.playing:
 			return p
-	# Logger.warn("AudioManager: SFX pool exhausted")
+	GameService.logger.warn("AudioManager: SFX pool exhausted")
 	return null
 
 func _on_sfx_finished(player: AudioStreamPlayer) -> void:

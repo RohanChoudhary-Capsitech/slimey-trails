@@ -12,9 +12,9 @@ var _audio:        AudioManager
 var _save:         SaveManager
 
 func _ready() -> void:
-	_game_manager = ServiceLocator.get_service(&"GameManager")
-	_audio        = ServiceLocator.get_service(&"AudioManager")
-	_save         = ServiceLocator.get_service(&"SaveManager")
+	_game_manager = GameService.game
+	_audio        = GameService.audio
+	_save         = GameService.save
 	# PDF §4: disabled by default; visibility_changed re-enables when on-screen
 	set_physics_process(false)
 	visibility_changed.connect(_on_visibility_changed)
@@ -35,8 +35,8 @@ func _move(_delta: float) -> void:
 	pass
 
 func die() -> void:
-	# Logger.info("Player died")
-	GameBus.player_died.emit()
+	GameService.logger.info("Player died")
+	GameService.bus.player_died.emit()
 
 # ── PDF §4: disable physics tick when player leaves the screen ────────────
 

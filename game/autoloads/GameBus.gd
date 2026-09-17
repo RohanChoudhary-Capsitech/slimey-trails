@@ -3,8 +3,8 @@ extends Node
 # GameBus — global signal bus
 # Nothing talks to each other directly — everything goes through signals here
 #
-# Emit:   GameBus.player_died.emit()
-# Listen: GameBus.player_died.connect(_on_player_died)
+# Emit:   GameService.bus.player_died.emit()
+# Listen: GameService.bus.player_died.connect(_on_player_died)
 
 # ── Player ────────────────────────────────────────────────────────────────
 signal player_died
@@ -29,8 +29,32 @@ signal purchase_completed(product_id: String)
 signal screen_opened(screen_name: String)
 signal screen_closed(screen_name: String)
 
-# ── Network ───────────────────────────────────────────────────────────────
+# ── Network & Persistence ─────────────────────────────────────────────────
 signal auth_completed(uid: String)
 signal auth_failed(reason: String)
+signal save_loaded
+signal save_saved
+signal sync_started
 signal sync_completed
 signal sync_failed(reason: String)
+
+func _ready() -> void:
+	# Bridge DataManagerSignals if available
+	var data_signals = get_node_or_null("/root/DataManagerSignals")
+	if data_signals:
+		data_signals.sync_started.connect(func(): sync_started.emit())
+		data_signals.sync_finished.connect(func(res):
+			if res and res.success:
+				sync_completed.emit()
+			else:
+				var err_msg = res.error_message if res else "Unknown sync error"
+				sync_failed.emit(err_msg)
+		)
+		data_signals.save_finished.connect(func(res):
+			if res and res.success:
+				save_saved.emit()
+		)
+		data_signals.login_changed.connect(func(uid: String, is_auth: bool):
+			if is_auth and not uid.is_empty():
+				auth_completed.emit(uid)
+		)

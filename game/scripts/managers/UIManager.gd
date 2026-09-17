@@ -11,7 +11,7 @@ extends Node
 var _stack: Array[Control] = []
 
 func _ready() -> void:
-	ServiceLocator.register(&"UIManager", self)
+	pass
 
 # ── Push ──────────────────────────────────────────────────────────────────
 
@@ -23,8 +23,8 @@ func push_packed(packed: PackedScene) -> void:
 	var screen := packed.instantiate() as Control
 	add_child(screen)
 	_stack.append(screen)
-	GameBus.screen_opened.emit(screen.name)
-	# Logger.debug("UI push", { "screen": screen.name })
+	GameService.bus.screen_opened.emit(screen.name)
+	GameService.logger.debug("UI push", { "screen": screen.name })
 
 ## Legacy: push a pre-instantiated Control (kept for compatibility).
 ## Prefer push_packed() for all new panels.
@@ -32,8 +32,8 @@ func push(screen: Control) -> void:
 	if not _stack.is_empty():
 		_stack.back().hide()
 	_stack.append(screen)
-	GameBus.screen_opened.emit(screen.name)
-	# Logger.debug("UI push", { "screen": screen.name })
+	GameService.bus.screen_opened.emit(screen.name)
+	GameService.logger.debug("UI push", { "screen": screen.name })
 
 # ── Pop ───────────────────────────────────────────────────────────────────
 
@@ -41,9 +41,9 @@ func push(screen: Control) -> void:
 func pop() -> void:
 	if _stack.is_empty():
 		return
-	var screen :Variant= _stack.pop_back()
-	GameBus.screen_closed.emit(screen.name)
-	# Logger.debug("UI pop", { "screen": screen.name })
+	var screen: Control = _stack.pop_back()
+	GameService.bus.screen_closed.emit(screen.name)
+	GameService.logger.debug("UI pop", { "screen": screen.name })
 	screen.queue_free()
 	if not _stack.is_empty():
 		_stack.back().show()

@@ -12,7 +12,7 @@ extends Node
 var _enabled: bool = true
 
 func _ready() -> void:
-	ServiceLocator.register(&"HapticsManager", self)
+	pass
 
 ## Short tap — button presses, UI confirmations.
 func light() -> void:

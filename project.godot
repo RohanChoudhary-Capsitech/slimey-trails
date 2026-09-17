@@ -10,30 +10,36 @@ config_version=5
 
 [application]
 
-config/name="slimey_trails"
+config/name="GameTemplate"
+run/main_scene="uid://bx44asopwnhnr"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
-GameBus="*uid://72va2g3uu278"
-GameConfig="*uid://dxl33ccop01x5"
-LoggerGlobal="*uid://bsskvckxl8i6h"
-ServiceLocator="*uid://dwcobu0ej0fd1"
+DataManagerConfig="*uid://bbcu7m7ky0day"
+DataManagerSignals="*uid://bcee7pmflem5q"
+SyncManager="*uid://bnrg4eorgr11y"
+DataManager="*uid://bn31em8tmpau6"
+GameService="*res://game/autoloads/GameService.gd"
+BackendService="*res://game/autoloads/BackendService.gd"
 
 [display]
 
-window/size/viewport_width=720
-window/size/viewport_height=1280
+window/size/viewport_width=1280
+window/size/viewport_height=720
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/datamanager/plugin.cfg")
+
 [physics]
 
-3d/physics_engine="Jolt Physics"
+2d/physics_engine="Jolt Physics"
 
 [rendering]
 
-rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"

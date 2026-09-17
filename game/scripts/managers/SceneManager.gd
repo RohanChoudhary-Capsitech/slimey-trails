@@ -15,7 +15,7 @@ var _preloaded: Dictionary = {}
 var _loading:   bool       = false
 
 func _ready() -> void:
-	ServiceLocator.register(&"SceneManager", self)
+	pass
 
 # ── PDF §5: Preload API ────────────────────────────────────────────────────
 # Call this from a loading screen to warm up the next scene.
@@ -27,13 +27,13 @@ func preload_scene(path: String) -> void:
 	ResourceLoader.load_threaded_request(path)
 	# Poll until loaded, then store — runs async on the background thread
 	while true:
-		var status := ResourceLoader.load_threaded_get_status(path)
+		var status: ResourceLoader.ThreadLoadStatus = ResourceLoader.load_threaded_get_status(path)
 		if status == ResourceLoader.THREAD_LOAD_LOADED:
 			_preloaded[path] = ResourceLoader.load_threaded_get(path)
-			# Logger.info("SceneManager: preloaded", { "path": path })
+			GameService.logger.info("SceneManager: preloaded", { "path": path })
 			return
 		elif status == ResourceLoader.THREAD_LOAD_FAILED:
-			# Logger.error("SceneManager: preload failed", { "path": path })
+			GameService.logger.error("SceneManager: preload failed", { "path": path })
 			return
 		await get_tree().process_frame
 
@@ -41,25 +41,25 @@ func preload_scene(path: String) -> void:
 
 func go_to(scene_path: String) -> void:
 	if _loading:
-		# Logger.warn("SceneManager: already loading")
+		GameService.logger.warn("SceneManager: already loading")
 		return
 
 	_loading = true
 	transition_started.emit(scene_path)
-	# Logger.info("SceneManager: going to", { "path": scene_path })
+	GameService.logger.info("SceneManager: going to", { "path": scene_path })
 
 	# PDF §5: use cached resource if available, else load async
 	var packed: PackedScene
 	if _preloaded.has(scene_path):
 		packed = _preloaded[scene_path]          # O(1) — no disk hit
 		_preloaded.erase(scene_path)             # free the cache slot
-		# Logger.debug("SceneManager: using preloaded resource")
+		GameService.logger.debug("SceneManager: using preloaded resource")
 	else:
 		packed = await _load_async(scene_path)  # fallback threaded load
 
 	if packed == null:
 		_loading = false
-		# Logger.error("Scene load failed", { "path": scene_path })
+		GameService.logger.error("Scene load failed", { "path": scene_path })
 		return
 
 	get_tree().change_scene_to_packed(packed)
@@ -74,7 +74,7 @@ func is_loading() -> bool:
 func _load_async(path: String) -> PackedScene:
 	ResourceLoader.load_threaded_request(path)
 	while true:
-		var status := ResourceLoader.load_threaded_get_status(path)
+		var status: ResourceLoader.ThreadLoadStatus = ResourceLoader.load_threaded_get_status(path)
 		match status:
 			ResourceLoader.THREAD_LOAD_LOADED:
 				return ResourceLoader.load_threaded_get(path)

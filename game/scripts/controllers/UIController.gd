@@ -12,9 +12,9 @@ var _audio:        AudioManager
 var _game_manager: GameManager
 
 func _ready() -> void:
-	_ui_manager   = ServiceLocator.get_service(&"UIManager")
-	_audio        = ServiceLocator.get_service(&"AudioManager")
-	_game_manager = ServiceLocator.get_service(&"GameManager")
+	_ui_manager   = GameService.ui
+	_audio        = GameService.audio
+	_game_manager = GameService.game
 	# PDF §4: UI screens don't need per-frame ticking by default
 	set_process(false)
 	set_physics_process(false)

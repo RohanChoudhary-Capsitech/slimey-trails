@@ -1,64 +1,209 @@
 class_name SaveManager
 extends Node
 
-# SaveManager — local encrypted save with O(1) in-memory cache
-# PDF §6 Time Complexity: all reads are O(1) Dictionary lookups against
-#   _data — disk is only touched on explicit load_local() / save_local().
-# PDF §6 SOLID: one job — local persistence. Cloud sync lives in NetworkManager.
+## SaveManager — Core Game-Facing Save Facade (GameService.save)
+##
+## Acts as the clean bridge between gameplay scripts and the backend 13-bucket
+## Unified Game Data Model. Manages disk persistence, in-memory cache clearing,
+## transactions, and cloud synchronization.
+##
+## Devs can access buckets directly (`save.economy.get_economy_data()`) or add
+## their own game-specific shortcut methods here.
 
-const _SAVE_PATH := "user://save.dat"
-const _SAVE_KEY  := "CHANGE_THIS_KEY"   # TODO: replace before shipping
+var _dm: Node:
+	get:
+		var tree = Engine.get_main_loop() as SceneTree
+		if tree and tree.root:
+			var bs = tree.root.get_node_or_null("BackendService")
+			if bs and bs.data:
+				return bs.data
+			return tree.root.get_node_or_null("DataManager")
+		return null
 
-# PDF §6: in-memory cache — O(1) get/set after initial load
-var _data:  Dictionary = {}
-var _dirty: bool       = false
+# ==============================================================================
+# 📦 TYPED REPOSITORY ACCESSORS (13 Domain Buckets)
+# ==============================================================================
+
+var identity: IdentityRepository:
+	get: return _dm.identity_repo if _dm else null
+
+var profile: ProfileRepository:
+	get: return _dm.profile_repo if _dm else null
+
+var device: DeviceRepository:
+	get: return _dm.device_repo if _dm else null
+
+var metadata: MetadataRepository:
+	get: return _dm.metadata_repo if _dm else null
+
+var session: SessionRepository:
+	get: return _dm.session_repo if _dm else null
+
+var settings: SettingsRepository:
+	get: return _dm.settings_repo if _dm else null
+
+var progression: ProgressionRepository:
+	get: return _dm.progression_repo if _dm else null
+
+var economy: EconomyRepository:
+	get: return _dm.economy_repo if _dm else null
+
+var inventory: InventoryRepository:
+	get: return _dm.inventory_repo if _dm else null
+
+var live_ops: LiveOpsRepository:
+	get: return _dm.live_ops_repo if _dm else null
+
+var stats: StatsRepository:
+	get: return _dm.stats_repo if _dm else null
+
+var tutorials: TutorialsRepository:
+	get: return _dm.tutorials_repo if _dm else null
+
+var monetization: MonetizationRepository:
+	get: return _dm.monetization_repo if _dm else null
 
 func _ready() -> void:
-	ServiceLocator.register(&"SaveManager", self)
-	load_local()   # warm cache once at startup
+	_log_info("SaveManager initialized (backed by DataManager)")
 
-# ── Read / Write (all O(1) — in-memory only) ──────────────────────────────
+# ==============================================================================
+# 💾 PERSISTENCE & STORAGE LIFECYCLE
+# ==============================================================================
 
-func set_value(key: String, value: Variant) -> void:
-	_data[key] = value
-	_dirty = true
+## Saves all dirty repositories to local disk (user://saves/).
+func save_game() -> DataResult:
+	if _dm:
+		var res: DataResult = _dm.save()
+		if res.success:
+			_log_info("SaveManager: Game saved successfully")
+		else:
+			_log_error("SaveManager: Save failed: " + res.error_message)
+		return res
+	return null
 
-func get_value(key: String, default: Variant = null) -> Variant:
-	return _data.get(key, default)   # O(1) Dictionary lookup
+## Reloads local save files from disk into active memory caches.
+func load_game() -> DataResult:
+	if _dm:
+		var res: DataResult = _dm.load_local_data()
+		if res.success:
+			_log_info("SaveManager: Game loaded successfully")
+		else:
+			_log_warn("SaveManager: Load result: " + res.error_message)
+		return res
+	return null
 
-func has(key: String) -> bool:
-	return _data.has(key)            # O(1)
+## Wipes all in-memory caches and clears local save files from disk.
+func clear_all() -> void:
+	if _dm:
+		_dm.clear_local()
+		_log_info("SaveManager: Cleared all local data")
 
+## Explicitly triggers a 2-way cloud synchronization.
+func sync_cloud() -> DataResult:
+	if _dm:
+		return await _dm.sync()
+	return null
+
+## Returns true if any in-memory repository has unsaved changes.
 func has_unsaved_changes() -> bool:
-	return _dirty
+	if _dm:
+		for name in _dm._repos_map:
+			var repo = _dm._repos_map[name] as BaseRepository
+			if repo and repo.is_dirty():
+				return true
+	return false
 
-# ── Persistence (disk I/O — call explicitly, never per-frame) ─────────────
+# ==============================================================================
+# 🔒 TRANSACTION MANAGEMENT
+# ==============================================================================
+
+## Begins an atomic transaction, snapshotting in-memory state.
+func begin_transaction() -> void:
+	if _dm:
+		_dm.begin_transaction()
+
+## Commits the transaction and persists modified dirty buckets.
+func commit_transaction() -> DataResult:
+	if _dm:
+		return _dm.commit_transaction()
+	return null
+
+## Rolls back all memory caches to the state captured at begin_transaction().
+func rollback_transaction() -> void:
+	if _dm:
+		_dm.rollback_transaction()
+
+# ==============================================================================
+# 🏷️ GLOBAL METADATA / KEY-VALUE STORE
+# ==============================================================================
+
+## Sets an arbitrary value in the global synced metadata store.
+func set_value(key: String, value: Variant) -> void:
+	if _dm:
+		_dm.set_metadata(key, value)
+
+## Retrieves a value from the metadata store with a fallback default.
+func get_value(key: String, default_val: Variant = null) -> Variant:
+	if _dm:
+		return _dm.get_metadata(key, default_val)
+	return default_val
+
+## Checks if a key exists in the metadata store.
+func has(key: String) -> bool:
+	if metadata:
+		var d = metadata.get_metadata_data()
+		return d.values.has(key) if d else false
+	return false
+
+## Deletes a key from the metadata store.
+func delete_value(key: String) -> void:
+	if _dm:
+		_dm.delete_metadata(key)
+
+# ==============================================================================
+# 🛠️ GENERIC MUTATION HELPER
+# ==============================================================================
+
+## Executes a callable mutation on a repository and automatically marks it dirty.
+func mutate_repo(repo: BaseRepository, mutate_fn: Callable) -> void:
+	if not repo:
+		return
+	repo.mutate(mutate_fn)
+
+# ==============================================================================
+# 🔄 BACKWARD-COMPATIBLE ALIASES
+# ==============================================================================
 
 func save_local() -> void:
-	# PDF §6: build ConfigFile in one pass — O(n) over keys, written once
-	var file := ConfigFile.new()
-	for key in _data:
-		file.set_value("save", key, _data[key])
-	var err := file.save_encrypted_pass(_SAVE_PATH, _SAVE_KEY)
-	if err != OK:
-		# Logger.error("SaveManager: local save failed", { "err": err })
-		return
-	_dirty = false
-	# Logger.info("Saved locally", { "keys": _data.size() })
+	save_game()
 
 func load_local() -> void:
-	var file := ConfigFile.new()
-	var err   := file.load_encrypted_pass(_SAVE_PATH, _SAVE_KEY)
-	if err != OK:
-		# Logger.info("SaveManager: no save found, starting fresh")
-		return
-	# PDF §6: single pass load into Dictionary — subsequent reads are O(1)
-	for key in file.get_section_keys("save"):
-		_data[key] = file.get_value("save", key)
-	# Logger.info("Save loaded", { "keys": _data.size() })
+	load_game()
 
 func clear() -> void:
-	_data.clear()
-	_dirty = false
-	DirAccess.remove_absolute(_SAVE_PATH)
-	# Logger.info("SaveManager: save cleared")
+	clear_all()
+
+# ==============================================================================
+# 🔒 PRIVATE LOGGING HELPERS
+# ==============================================================================
+
+func _log_info(msg: String) -> void:
+	var tree = Engine.get_main_loop() as SceneTree
+	if tree and tree.root:
+		var gs = tree.root.get_node_or_null("GameService")
+		if gs and gs.logger:
+			gs.logger.info(msg)
+
+func _log_warn(msg: String) -> void:
+	var tree = Engine.get_main_loop() as SceneTree
+	if tree and tree.root:
+		var gs = tree.root.get_node_or_null("GameService")
+		if gs and gs.logger:
+			gs.logger.warning(msg)
+
+func _log_error(msg: String) -> void:
+	var tree = Engine.get_main_loop() as SceneTree
+	if tree and tree.root:
+		var gs = tree.root.get_node_or_null("GameService")
+		if gs and gs.logger:
+			gs.logger.error(msg)
