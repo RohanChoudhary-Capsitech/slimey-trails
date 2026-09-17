@@ -199,7 +199,7 @@ func _log_warn(msg: String) -> void:
 	if tree and tree.root:
 		var gs = tree.root.get_node_or_null("GameService")
 		if gs and gs.logger:
-			gs.logger.warning(msg)
+			gs.logger.warn(msg)
 
 func _log_error(msg: String) -> void:
 	var tree = Engine.get_main_loop() as SceneTree

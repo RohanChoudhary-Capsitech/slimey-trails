@@ -146,7 +146,7 @@ func _log_info(message: String) -> void:
 func _log_warn(message: String) -> void:
 	var gs = get_node_or_null("/root/GameService")
 	if gs and gs.logger:
-		gs.logger.warning(message)
+		gs.logger.warn(message)
 
 # ── Scene Button Aliases ──────────────────────────────────────────────────────
 
