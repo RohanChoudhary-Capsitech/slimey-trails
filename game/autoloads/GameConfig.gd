@@ -34,3 +34,13 @@ func is_prototype() -> bool:
 
 func is_production() -> bool:
 	return BUILD_STAGE == Stage.PRODUCTION
+# ── Level Registry ────────────────────────────────────────────────────────
+const LEVEL_SCENES: Dictionary = {
+	1: "res://game/levels/level_1.tscn",
+	3: "res://game/levels/level_3/level_3.tscn",
+	5: "res://game/levels/level_5/level_5.tscn",
+	7: "res://game/levels/level_7/level_7.tscn",
+}
+
+func get_level_scene_path(level_id: int) -> String:
+	return LEVEL_SCENES.get(level_id, LEVEL_SCENES[1])
