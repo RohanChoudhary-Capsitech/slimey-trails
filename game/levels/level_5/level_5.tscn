@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://lml3lxi7vo7u"]
+
+[ext_resource type="Script" uid="uid://bdhi2qk6hvgy8" path="res://game/scripts/controllers/StageRotator.gd" id="1_0rng0"]
+[ext_resource type="Texture2D" uid="uid://oy8cxp2j2s80" path="res://icon.svg" id="1_wq6eb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0rng0"]
+size = Vector2(400, 30)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0rng0"]
+size = Vector3(250, 30, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_a48tj"]
+size = Vector3(400, 30, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x22l2"]
+size = Vector2(420, 30)
+
+[sub_resource type="BoxMesh" id="BoxMesh_sxgo0"]
+size = Vector3(420, 30, 1)
+
+[node name="Level5" type="Node2D" unique_id=1604465886]
+position = Vector2(363, 795)
+script = ExtResource("1_0rng0")
+
+[node name="LeftWall" type="StaticBody2D" parent="." unique_id=165607936]
+position = Vector2(-226, -4)
+rotation = 1.5707964
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall" unique_id=317108602]
+shape = SubResource("RectangleShape2D_0rng0")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="LeftWall" unique_id=298661000]
+mesh = SubResource("BoxMesh_0rng0")
+texture = ExtResource("1_wq6eb")
+
+[node name="RightWall" type="StaticBody2D" parent="." unique_id=1509779726]
+position = Vector2(224, -4)
+rotation = 1.5707964
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall" unique_id=2085999148]
+shape = SubResource("RectangleShape2D_0rng0")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="RightWall" unique_id=307610147]
+mesh = SubResource("BoxMesh_a48tj")
+texture = ExtResource("1_wq6eb")
+
+[node name="TopWall" type="StaticBody2D" parent="." unique_id=657637165]
+position = Vector2(-1, -114)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TopWall" unique_id=1618588597]
+position = Vector2(-53, 0)
+shape = SubResource("RectangleShape2D_x22l2")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="TopWall" unique_id=335125965]
+position = Vector2(-53, 0)
+scale = Vector2(0.74761903, 1)
+mesh = SubResource("BoxMesh_sxgo0")
+texture = ExtResource("1_wq6eb")
+
+[node name="BottomWall" type="StaticBody2D" parent="." unique_id=1531693062]
+position = Vector2(-1, 106)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BottomWall" unique_id=816898681]
+shape = SubResource("RectangleShape2D_x22l2")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="BottomWall" unique_id=122119849]
+mesh = SubResource("BoxMesh_sxgo0")
+texture = ExtResource("1_wq6eb")

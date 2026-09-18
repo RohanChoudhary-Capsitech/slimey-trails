@@ -1,0 +1,193 @@
+[gd_scene format=3 uid="uid://bvuxocf8b2mnv"]
+
+[ext_resource type="Script" uid="uid://bdhi2qk6hvgy8" path="res://game/scripts/controllers/StageRotator.gd" id="1_67rdf"]
+[ext_resource type="Texture2D" uid="uid://oy8cxp2j2s80" path="res://icon.svg" id="2_b4a1b"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0rng0"]
+size = Vector2(400, 30)
+
+[sub_resource type="BoxMesh" id="BoxMesh_a48tj"]
+size = Vector3(400, 30, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_67rdf"]
+size = Vector2(420, 30)
+
+[sub_resource type="BoxMesh" id="BoxMesh_b4a1b"]
+size = Vector3(560, 30, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x22l2"]
+size = Vector2(340, 30)
+
+[sub_resource type="BoxMesh" id="BoxMesh_sxgo0"]
+size = Vector3(340, 30, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5hkiq"]
+size = Vector3(280, 75, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uvm4r"]
+size = Vector2(280, 75)
+
+[sub_resource type="BoxMesh" id="BoxMesh_67rdf"]
+size = Vector3(280, 45, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b4a1b"]
+size = Vector2(280, 45)
+
+[sub_resource type="BoxMesh" id="BoxMesh_u51f2"]
+size = Vector3(280, 74, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lvjox"]
+size = Vector2(280, 75)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3f7wr"]
+size = Vector2(128, 128)
+
+[node name="Level7" type="Node2D" unique_id=1604465886]
+position = Vector2(363, 795)
+script = ExtResource("1_67rdf")
+
+[node name="LeftWall" type="StaticBody2D" parent="." unique_id=165607936]
+position = Vector2(-226, -4)
+rotation = 1.5707964
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall" unique_id=317108602]
+shape = SubResource("RectangleShape2D_0rng0")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="LeftWall" unique_id=298661000]
+mesh = SubResource("BoxMesh_a48tj")
+texture = ExtResource("2_b4a1b")
+
+[node name="RightWall" type="StaticBody2D" parent="." unique_id=1509779726]
+position = Vector2(224, -4)
+rotation = 1.5707964
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall" unique_id=2085999148]
+shape = SubResource("RectangleShape2D_0rng0")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="RightWall" unique_id=307610147]
+mesh = SubResource("BoxMesh_a48tj")
+texture = ExtResource("2_b4a1b")
+
+[node name="TopWall" type="StaticBody2D" parent="." unique_id=657637165]
+position = Vector2(52, -189)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TopWall" unique_id=1618588597]
+position = Vector2(-53, 0)
+shape = SubResource("RectangleShape2D_67rdf")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="TopWall" unique_id=335125965]
+position = Vector2(-53, 0)
+scale = Vector2(0.74761903, 1)
+mesh = SubResource("BoxMesh_b4a1b")
+texture = ExtResource("2_b4a1b")
+
+[node name="BottomWall" type="StaticBody2D" parent="." unique_id=1531693062]
+position = Vector2(34, 181)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BottomWall" unique_id=816898681]
+shape = SubResource("RectangleShape2D_x22l2")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="BottomWall" unique_id=122119849]
+mesh = SubResource("BoxMesh_sxgo0")
+texture = ExtResource("2_b4a1b")
+
+[node name="ShrinkingWalls" type="Node2D" parent="." unique_id=939989468]
+
+[node name="MostLeft" type="StaticBody2D" parent="ShrinkingWalls" unique_id=974218121]
+position = Vector2(-173.5, 26)
+rotation = 1.5707964
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="ShrinkingWalls/MostLeft" unique_id=2019269817]
+mesh = SubResource("BoxMesh_5hkiq")
+texture = ExtResource("2_b4a1b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShrinkingWalls/MostLeft" unique_id=1901039753]
+shape = SubResource("RectangleShape2D_uvm4r")
+
+[node name="Middle1" type="StaticBody2D" parent="ShrinkingWalls" unique_id=39971007]
+position = Vector2(-113.5, 26)
+rotation = 1.5707964
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="ShrinkingWalls/Middle1" unique_id=442378414]
+mesh = SubResource("BoxMesh_67rdf")
+texture = ExtResource("2_b4a1b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShrinkingWalls/Middle1" unique_id=1596067223]
+shape = SubResource("RectangleShape2D_b4a1b")
+
+[node name="Middle2" type="StaticBody2D" parent="ShrinkingWalls" unique_id=861104149]
+position = Vector2(-68.5, 26)
+rotation = 1.5707964
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="ShrinkingWalls/Middle2" unique_id=2068391314]
+mesh = SubResource("BoxMesh_67rdf")
+texture = ExtResource("2_b4a1b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShrinkingWalls/Middle2" unique_id=1500666421]
+shape = SubResource("RectangleShape2D_b4a1b")
+
+[node name="Middle3" type="StaticBody2D" parent="ShrinkingWalls" unique_id=191238789]
+position = Vector2(-23.5, 26)
+rotation = 1.5707964
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="ShrinkingWalls/Middle3" unique_id=1453389331]
+mesh = SubResource("BoxMesh_67rdf")
+texture = ExtResource("2_b4a1b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShrinkingWalls/Middle3" unique_id=1989808148]
+shape = SubResource("RectangleShape2D_b4a1b")
+
+[node name="Middle4" type="StaticBody2D" parent="ShrinkingWalls" unique_id=1085671075]
+position = Vector2(21.5, 26)
+rotation = 1.5707964
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="ShrinkingWalls/Middle4" unique_id=1628793749]
+mesh = SubResource("BoxMesh_67rdf")
+texture = ExtResource("2_b4a1b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShrinkingWalls/Middle4" unique_id=1417306379]
+shape = SubResource("RectangleShape2D_b4a1b")
+
+[node name="Middle5" type="StaticBody2D" parent="ShrinkingWalls" unique_id=1472801970]
+position = Vector2(66.5, 26)
+rotation = 1.5707964
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="ShrinkingWalls/Middle5" unique_id=1027743424]
+mesh = SubResource("BoxMesh_67rdf")
+texture = ExtResource("2_b4a1b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShrinkingWalls/Middle5" unique_id=1310554551]
+shape = SubResource("RectangleShape2D_b4a1b")
+
+[node name="Middle6" type="StaticBody2D" parent="ShrinkingWalls" unique_id=924236428]
+position = Vector2(111.5, 26)
+rotation = 1.5707964
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="ShrinkingWalls/Middle6" unique_id=1137159634]
+mesh = SubResource("BoxMesh_67rdf")
+texture = ExtResource("2_b4a1b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShrinkingWalls/Middle6" unique_id=1190797854]
+shape = SubResource("RectangleShape2D_b4a1b")
+
+[node name="MostRight" type="StaticBody2D" parent="ShrinkingWalls" unique_id=418629446]
+position = Vector2(171, 26)
+rotation = 1.5707964
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="ShrinkingWalls/MostRight" unique_id=51986379]
+position = Vector2(0, -0.48120117)
+scale = Vector2(1, 1.0130055)
+mesh = SubResource("BoxMesh_u51f2")
+texture = ExtResource("2_b4a1b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShrinkingWalls/MostRight" unique_id=669991887]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_lvjox")
+
+[node name="Goal" type="Sprite2D" parent="." unique_id=1161005601]
+position = Vector2(-173.5, 181.50002)
+scale = Vector2(0.5859375, 0.22656283)
+texture = ExtResource("2_b4a1b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Goal" unique_id=243011083]
+shape = SubResource("RectangleShape2D_3f7wr")
