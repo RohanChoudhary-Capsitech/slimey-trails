@@ -11,16 +11,16 @@ config_version=5
 [application]
 
 config/name="GameTemplate"
-run/main_scene="uid://bx44asopwnhnr"
+run/main_scene="uid://ci4igrxrxta3u"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
-DataManagerConfig="*uid://bbcu7m7ky0day"
-DataManagerSignals="*uid://bcee7pmflem5q"
-SyncManager="*uid://bnrg4eorgr11y"
-DataManager="*uid://bn31em8tmpau6"
+DataManagerConfig="*uid://htq3pcx47jay"
+DataManagerSignals="*uid://c7xqwils2irst"
+SyncManager="*uid://bw121kmg04cb6"
+DataManager="*uid://cssf5djy4ahj4"
 GameService="*res://game/autoloads/GameService.gd"
 BackendService="*res://game/autoloads/BackendService.gd"
 
