@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 180 180">
+  <defs>
+    <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="50%" stop-color="#ea580c"/>
+      <stop offset="100%" stop-color="#b91c1c"/>
+    </linearGradient>
+  </defs>
+  <!-- Outer irregular gear/ring shape with a hollow transparent circular hole in the center -->
+  <path fill-rule="evenodd" d="
+    M 90 10
+    C 135 10, 170 45, 170 90
+    C 170 135, 135 170, 90 170
+    C 45 170, 10 135, 10 90
+    C 10 45, 45 10, 90 10 Z
+    M 90 50
+    C 68 50, 50 68, 50 90
+    C 50 112, 68 130, 90 130
+    C 112 130, 130 112, 130 90
+    C 130 68, 112 50, 90 50 Z"
+    fill="url(#ringGrad)" stroke="#7c2d12" stroke-width="3"/>
+</svg>

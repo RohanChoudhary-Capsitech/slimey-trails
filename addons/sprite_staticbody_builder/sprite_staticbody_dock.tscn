@@ -1,0 +1,257 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://addons/sprite_staticbody_builder/sprite_staticbody_dock.gd" id="1_dock_script"]
+[ext_resource type="Texture2D" path="res://addons/sprite_staticbody_builder/ui/icons/icon_plugin.svg" id="2_icon_plugin"]
+[ext_resource type="Texture2D" path="res://addons/sprite_staticbody_builder/ui/icons/icon_create.svg" id="3_icon_create"]
+[ext_resource type="Texture2D" path="res://addons/sprite_staticbody_builder/ui/icons/icon_regenerate.svg" id="4_icon_regen"]
+[ext_resource type="Texture2D" path="res://addons/sprite_staticbody_builder/ui/icons/icon_preview.svg" id="5_icon_prev"]
+
+[node name="SpriteStaticBodyDock" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_dock_script")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="VBox" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="HeaderBox" type="HBoxContainer" parent="ScrollContainer/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="AppIcon" type="TextureRect" parent="ScrollContainer/VBox/HeaderBox"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+texture = ExtResource("2_icon_plugin")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TitleLabel" type="Label" parent="ScrollContainer/VBox/HeaderBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 14
+text = "Sprite StaticBody Builder"
+
+[node name="SelectedSpriteSection" type="VBoxContainer" parent="ScrollContainer/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="SectionLabel" type="Label" parent="ScrollContainer/VBox/SelectedSpriteSection"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.75, 0.85, 1)
+theme_override_font_sizes/font_size = 11
+text = "SELECTED SPRITE"
+
+[node name="SelectionPanel" type="PanelContainer" parent="ScrollContainer/VBox/SelectedSpriteSection"]
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="ScrollContainer/VBox/SelectedSpriteSection/SelectionPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 6
+
+[node name="SelectedLabel" type="Label" parent="ScrollContainer/VBox/SelectedSpriteSection/SelectionPanel/Margin"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "No Sprite2D selected"
+text_overrun_behavior = 3
+
+[node name="HSeparator1" type="HSeparator" parent="ScrollContainer/VBox"]
+layout_mode = 2
+
+[node name="CollisionSection" type="VBoxContainer" parent="ScrollContainer/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SectionLabel" type="Label" parent="ScrollContainer/VBox/CollisionSection"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.75, 0.85, 1)
+theme_override_font_sizes/font_size = 11
+text = "COLLISION"
+
+[node name="AlphaThresholdContainer" type="VBoxContainer" parent="ScrollContainer/VBox/CollisionSection"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Label" type="Label" parent="ScrollContainer/VBox/CollisionSection/AlphaThresholdContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Alpha Threshold"
+
+[node name="HBox" type="HBoxContainer" parent="ScrollContainer/VBox/CollisionSection/AlphaThresholdContainer"]
+layout_mode = 2
+
+[node name="ThresholdSlider" type="HSlider" parent="ScrollContainer/VBox/CollisionSection/AlphaThresholdContainer/HBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = 0.01
+max_value = 1.0
+step = 0.01
+value = 0.5
+
+[node name="ThresholdSpinBox" type="SpinBox" parent="ScrollContainer/VBox/CollisionSection/AlphaThresholdContainer/HBox"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 0.01
+max_value = 1.0
+step = 0.01
+value = 0.5
+
+[node name="SimplificationContainer" type="VBoxContainer" parent="ScrollContainer/VBox/CollisionSection"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Label" type="Label" parent="ScrollContainer/VBox/CollisionSection/SimplificationContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Simplification"
+
+[node name="HBox" type="HBoxContainer" parent="ScrollContainer/VBox/CollisionSection/SimplificationContainer"]
+layout_mode = 2
+
+[node name="SimplificationOption" type="OptionButton" parent="ScrollContainer/VBox/CollisionSection/SimplificationContainer/HBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CustomEpsilonSpinBox" type="SpinBox" parent="ScrollContainer/VBox/CollisionSection/SimplificationContainer/HBox"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+min_value = 0.05
+max_value = 50.0
+step = 0.1
+value = 2.5
+suffix = "px"
+
+[node name="MaxPointsContainer" type="VBoxContainer" parent="ScrollContainer/VBox/CollisionSection"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Label" type="Label" parent="ScrollContainer/VBox/CollisionSection/MaxPointsContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Max Points"
+
+[node name="MaxPointsSpinBox" type="SpinBox" parent="ScrollContainer/VBox/CollisionSection/MaxPointsContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 3.0
+max_value = 1024.0
+value = 64.0
+
+[node name="CollisionModeContainer" type="VBoxContainer" parent="ScrollContainer/VBox/CollisionSection"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Label" type="Label" parent="ScrollContainer/VBox/CollisionSection/CollisionModeContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Collision Mode"
+
+[node name="CollisionModeOption" type="OptionButton" parent="ScrollContainer/VBox/CollisionSection/CollisionModeContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HSeparator2" type="HSeparator" parent="ScrollContainer/VBox"]
+layout_mode = 2
+
+[node name="OptionsSection" type="VBoxContainer" parent="ScrollContainer/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="SectionLabel" type="Label" parent="ScrollContainer/VBox/OptionsSection"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.75, 0.85, 1)
+theme_override_font_sizes/font_size = 11
+text = "OPTIONS"
+
+[node name="CheckCreateStaticBody" type="CheckBox" parent="ScrollContainer/VBox/OptionsSection"]
+unique_name_in_owner = true
+layout_mode = 2
+button_pressed = true
+text = "Create StaticBody2D"
+
+[node name="CheckKeepOriginalSprite" type="CheckBox" parent="ScrollContainer/VBox/OptionsSection"]
+unique_name_in_owner = true
+layout_mode = 2
+button_pressed = true
+text = "Keep original Sprite2D"
+
+[node name="CheckAutoGenerate" type="CheckBox" parent="ScrollContainer/VBox/OptionsSection"]
+unique_name_in_owner = true
+layout_mode = 2
+button_pressed = true
+text = "Generate collision automatically"
+
+[node name="HSeparator3" type="HSeparator" parent="ScrollContainer/VBox"]
+layout_mode = 2
+
+[node name="ButtonsSection" type="VBoxContainer" parent="ScrollContainer/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="BtnCreate" type="Button" parent="ScrollContainer/VBox/ButtonsSection"]
+unique_name_in_owner = true
+layout_mode = 2
+disabled = true
+text = "Create StaticBody"
+icon = ExtResource("3_icon_create")
+alignment = 0
+
+[node name="BtnRegenerate" type="Button" parent="ScrollContainer/VBox/ButtonsSection"]
+unique_name_in_owner = true
+layout_mode = 2
+disabled = true
+text = "Regenerate Collision"
+icon = ExtResource("4_icon_regen")
+alignment = 0
+
+[node name="BtnPreview" type="Button" parent="ScrollContainer/VBox/ButtonsSection"]
+unique_name_in_owner = true
+layout_mode = 2
+toggle_mode = true
+disabled = true
+text = "Preview Collision"
+icon = ExtResource("5_icon_prev")
+alignment = 0
+
+[node name="BtnRemove" type="Button" parent="ScrollContainer/VBox/ButtonsSection"]
+unique_name_in_owner = true
+layout_mode = 2
+disabled = true
+text = "Remove Collision"
+alignment = 0
+
+[node name="StatusPanel" type="PanelContainer" parent="ScrollContainer/VBox"]
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="ScrollContainer/VBox/StatusPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 4
+
+[node name="StatusLabel" type="Label" parent="ScrollContainer/VBox/StatusPanel/Margin"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
+theme_override_font_sizes/font_size = 11
+text = "Select a Sprite2D to begin."
+autowrap_mode = 2

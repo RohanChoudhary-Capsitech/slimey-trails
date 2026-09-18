@@ -1,0 +1,74 @@
+[gd_scene format=3 uid="uid://ciqdd3oxpi44j"]
+
+[ext_resource type="Texture2D" uid="uid://bx805r34xipv3" path="res://addons/sprite_staticbody_builder/examples/textures/platform_curved.svg" id="1_platform"]
+[ext_resource type="Texture2D" uid="uid://by7s8o01vrfm0" path="res://addons/sprite_staticbody_builder/examples/textures/rock_broken.svg" id="2_rock"]
+[ext_resource type="Texture2D" uid="uid://cqwpw22c2fuy0" path="res://addons/sprite_staticbody_builder/examples/textures/doughnut_obstacle.svg" id="3_doughnut"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_bouncy"]
+friction = 0.2
+bounce = 0.55
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ball"]
+radius = 16.0
+
+[sub_resource type="Gradient" id="Gradient_ball"]
+colors = PackedColorArray(0.95, 0.3, 0.4, 1, 0.98, 0.7, 0.2, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ball"]
+gradient = SubResource("Gradient_ball")
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0.8)
+
+[node name="ExampleScene" type="Node2D" unique_id=1124844684]
+
+[node name="Background" type="ColorRect" parent="." unique_id=1466834079]
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.08, 0.1, 0.14, 1)
+
+[node name="InstructionsLabel" type="Label" parent="." unique_id=2058383552]
+offset_left = 32.0
+offset_top = 24.0
+offset_right = 900.0
+offset_bottom = 120.0
+theme_override_colors/font_color = Color(0.9, 0.95, 1, 0.9)
+theme_override_font_sizes/font_size = 14
+text = "SPRITE STATICBODY BUILDER - TEST SCENE
+1. Select any Sprite2D below in the Scene tree ('RockSprite', 'DoughnutSprite', or 'CurvedPlatform').
+2. In the 'Sprite StaticBody Builder' dock (right side), toggle 'Preview Collision' to see real-time boundary preview.
+3. Click 'Create StaticBody' to instantly turn the sprite into a StaticBody2D with precise irregular collision.
+4. Press F6 (Play Current Scene) to watch the physics ball interact with the generated collision geometry!"
+
+[node name="CurvedPlatformBody" type="StaticBody2D" parent="." unique_id=1000489701]
+position = Vector2(400, 520)
+scale = Vector2(2, 2)
+
+[node name="CurvedPlatform" type="Sprite2D" parent="CurvedPlatformBody" unique_id=1864060144]
+texture = ExtResource("1_platform")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CurvedPlatformBody" unique_id=126498111]
+polygon = PackedVector2Array(-120, -12, -88, -24, -30, -26, 12, -24, 78, -34, 116, -18, 124, -16, 116, 6, 68, 36, 32, 20, -6, 38, -36, 34, -72, 36, -118, 4)
+
+[node name="RockSprite" type="Sprite2D" parent="." unique_id=416604744]
+position = Vector2(850, 420)
+rotation = -0.15
+scale = Vector2(1.3, 1.3)
+texture = ExtResource("2_rock")
+
+[node name="DoughnutSprite" type="Sprite2D" parent="." unique_id=693393403]
+position = Vector2(220, 320)
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("3_doughnut")
+
+[node name="PhysicsBall" type="RigidBody2D" parent="." unique_id=260872014]
+position = Vector2(320, 180)
+physics_material_override = SubResource("PhysicsMaterial_bouncy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PhysicsBall" unique_id=568304226]
+shape = SubResource("CircleShape2D_ball")
+
+[node name="BallSprite" type="Sprite2D" parent="PhysicsBall" unique_id=1802071020]
+texture = SubResource("GradientTexture2D_ball")

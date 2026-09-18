@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="96" viewBox="0 0 256 96">
+  <defs>
+    <linearGradient id="grassGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4ade80"/>
+      <stop offset="100%" stop-color="#22c55e"/>
+    </linearGradient>
+    <linearGradient id="dirtGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#854d0e"/>
+      <stop offset="100%" stop-color="#451a03"/>
+    </linearGradient>
+  </defs>
+  <!-- Irregular curved bottom dirt -->
+  <path d="M 12 36 C 40 28, 90 20, 140 24 C 190 28, 230 18, 244 32 C 248 54, 232 78, 196 84 C 160 90, 130 72, 92 86 C 54 100, 20 82, 10 56 Z" fill="url(#dirtGrad)" stroke="#381a05" stroke-width="2"/>
+  <!-- Curved organic grass top -->
+  <path d="M 8 36 C 35 24, 85 18, 140 22 C 195 26, 235 14, 248 30 C 235 44, 200 38, 175 46 C 150 54, 120 40, 85 48 C 50 56, 25 44, 8 36 Z" fill="url(#grassGrad)" stroke="#15803d" stroke-width="2"/>
+</svg>

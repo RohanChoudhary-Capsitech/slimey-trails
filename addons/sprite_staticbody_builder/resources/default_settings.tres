@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SpriteStaticBodySettings" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://addons/sprite_staticbody_builder/resources/builder_settings.gd" id="1_settings"]
+
+[resource]
+script = ExtResource("1_settings")
+alpha_threshold = 0.5
+simplification_level = 1
+custom_epsilon = 2.5
+max_polygon_points = 64
+collision_mode = 0
+create_staticbody = true
+keep_original_sprite = true
+generate_collision_auto = true

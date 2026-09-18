@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192">
+  <defs>
+    <linearGradient id="rockGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#94a3b8"/>
+      <stop offset="50%" stop-color="#64748b"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </linearGradient>
+  </defs>
+  <!-- Irregular angular rock with jagged edges, overhangs, sharp slopes -->
+  <polygon points="40,25 95,12 145,28 178,65 160,115 175,145 130,175 75,182 25,150 15,105 38,70" fill="url(#rockGrad)" stroke="#1e293b" stroke-width="3" stroke-linejoin="round"/>
+  <!-- Internal cracks and facets -->
+  <polyline points="95,12 105,75 75,110 25,150" fill="none" stroke="#1e293b" stroke-width="2" stroke-linejoin="round"/>
+  <polyline points="105,75 160,115" fill="none" stroke="#1e293b" stroke-width="2"/>
+  <polygon points="40,25 95,12 105,75 38,70" fill="#cbd5e1" fill-opacity="0.3"/>
+</svg>
