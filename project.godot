@@ -17,10 +17,10 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-DataManagerConfig="*uid://htq3pcx47jay"
-DataManagerSignals="*uid://c7xqwils2irst"
-SyncManager="*uid://bw121kmg04cb6"
-DataManager="*uid://cssf5djy4ahj4"
+DataManagerConfig="*uid://nqsn3ynub5r4"
+DataManagerSignals="*uid://bviy6eae1dy06"
+SyncManager="*uid://bamvadl61edr"
+DataManager="*uid://cxhv77n8pq8r0"
 GameService="*res://game/autoloads/GameService.gd"
 BackendService="*res://game/autoloads/BackendService.gd"
 
@@ -33,7 +33,7 @@ window/stretch/aspect="expand"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/datamanager/plugin.cfg")
+enabled=PackedStringArray("res://addons/datamanager/plugin.cfg", "res://addons/softbody2d/plugin.cfg")
 
 [physics]
 

@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bhbxim4u7h0u2"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_3f7wr"]
+
+[node name="Slime" type="SoftBody3D" unique_id=656795245]
+mesh = SubResource("SphereMesh_3f7wr")
+pinned_points = [781]
+attachments/0/point_index = 781
+attachments/0/spatial_attachment_path = NodePath("")
+attachments/0/offset = Vector3(0, 0, 0)
