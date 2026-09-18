@@ -1,6 +1,6 @@
 class_name UIManager
-extends Node
-
+# extends Node
+extends CanvasLayer
 # UIManager — screen stack with on-demand instantiation and immediate free
 # PDF §5 (Small panels): push_packed() instantiates on demand; pop() calls
 #   queue_free() immediately so nothing sits idle in VRAM.
@@ -11,6 +11,7 @@ extends Node
 var _stack: Array[Control] = []
 
 func _ready() -> void:
+	layer = 100
 	pass
 
 # ── Push ──────────────────────────────────────────────────────────────────

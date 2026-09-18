@@ -1,0 +1,90 @@
+[gd_scene format=3 uid="uid://b8oar3vn42amv"]
+
+[ext_resource type="Script" uid="uid://lmohayal475k" path="res://game/scripts/gamepanel.gd" id="1_rp2xy"]
+[ext_resource type="Texture2D" uid="uid://f745yokllk23" path="res://game/assets/sprites/single/ui/Frame 34 (1).png" id="1_xt1m1"]
+[ext_resource type="Texture2D" uid="uid://cl2y02nfelno" path="res://game/assets/sprites/single/ui/Group.png" id="2_0mg83"]
+[ext_resource type="Texture2D" uid="uid://oy8cxp2j2s80" path="res://icon.svg" id="3_bgw3l"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uvm4r"]
+
+[node name="Gamepanel" type="Control" unique_id=2033981247]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rp2xy")
+
+[node name="Panel" type="Panel" parent="." unique_id=1268349739]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_uvm4r")
+
+[node name="Bg" type="TextureRect" parent="Panel" unique_id=1073731500]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_xt1m1")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="Panel/Bg" unique_id=1146812885]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -79.0
+offset_top = 280.0
+offset_right = 68.0
+offset_bottom = 376.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 70
+text = "0/90"
+
+[node name="hbox" type="HBoxContainer" parent="Panel/Bg" unique_id=400824570]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -246.0
+offset_top = 151.0
+offset_right = -176.0
+offset_bottom = 211.0
+grow_horizontal = 0
+
+[node name="SoundOn" type="TextureButton" parent="Panel/Bg/hbox" unique_id=331452426]
+layout_mode = 2
+texture_normal = ExtResource("2_0mg83")
+
+[node name="SoundOff" type="TextureButton" parent="Panel/Bg/hbox" unique_id=1095244999]
+visible = false
+layout_mode = 2
+texture_normal = ExtResource("2_0mg83")
+
+[node name="worldtimingbtn" type="TextureButton" parent="Panel/Bg" unique_id=1851029377]
+layout_mode = 0
+offset_left = 41.0
+offset_top = 126.0
+offset_right = 114.0
+offset_bottom = 199.0
+texture_normal = ExtResource("3_bgw3l")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="Skin" type="TextureButton" parent="Panel/Bg" unique_id=625220048]
+layout_mode = 0
+offset_left = 39.0
+offset_top = 255.0
+offset_right = 112.0
+offset_bottom = 328.0
+texture_normal = ExtResource("3_bgw3l")
+ignore_texture_size = true
+stretch_mode = 4

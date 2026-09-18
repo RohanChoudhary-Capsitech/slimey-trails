@@ -88,7 +88,6 @@ layout_mode = 2
 [connection signal="pressed" from="VBoxContainer/HBoxProgression/BtnCompleteLevel" to="." method="_on_btn_complete_level_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxMetadata/BtnSetMeta" to="." method="_on_btn_set_meta_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxIdentity/BtnSetWhat" to="." method="_on_what_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxIdentity/BtnSetWhat" to="." method="_on_btn_set_meta_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxPersistence/BtnSave" to="." method="_on_btn_save_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxPersistence/BtnReload" to="." method="_on_btn_reload_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxPersistence/BtnClear" to="." method="_on_btn_clear_pressed"]
