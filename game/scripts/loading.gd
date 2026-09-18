@@ -16,5 +16,5 @@ func _run_loading() -> void:
 	var tween := create_tween()
 	tween.tween_property(progress_bar, "value", 100.0, 1.0)
 	await tween.finished
-
+	GameService.game.set_selected_level(3)
 	GameService.scene.go_to(next_scene_path)

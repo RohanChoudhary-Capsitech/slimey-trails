@@ -5,7 +5,7 @@ extends Node
 # States: IDLE → PLAYING ↔ PAUSED → GAME_OVER → IDLE
 
 enum State { IDLE, PLAYING, PAUSED, GAME_OVER }
-
+var selected_level: int = 1
 var state: State = State.IDLE :
 	set(v):
 		state = v
@@ -44,3 +44,8 @@ func reset() -> void:
 
 func is_playing() -> bool:
 	return state == State.PLAYING
+
+
+func set_selected_level(level_id: int) -> void:
+	selected_level = level_id
+	GameService.logger.info("GameManager: selected level", { "level_id": level_id })

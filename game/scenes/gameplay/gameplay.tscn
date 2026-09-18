@@ -1,11 +1,14 @@
 [gd_scene format=3 uid="uid://bx1e1ph5d5nru"]
 
 [ext_resource type="Texture2D" uid="uid://droojg8gooltv" path="res://game/assets/sprites/single/ui/GameOverBox.png" id="1_gyu4r"]
+[ext_resource type="Script" uid="uid://c65buks4j7ffo" path="res://game/scenes/gameplay/gameplay.gd" id="1_mpy87"]
 [ext_resource type="PackedScene" uid="uid://b8oar3vn42amv" path="res://game/scenes/gameplay/gamepanel.tscn" id="2_mpy87"]
 
 [node name="Gameplay" type="Node2D" unique_id=126619269]
+script = ExtResource("1_mpy87")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=411111427]
+visible = false
 position = Vector2(381.00003, 764.99994)
 scale = Vector2(0.37681434, 0.3728605)
 texture = ExtResource("1_gyu4r")

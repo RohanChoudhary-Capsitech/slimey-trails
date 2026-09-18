@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://cqaekep4sk0j6"]
 
-[ext_resource type="Script" uid="uid://bdhi2qk6hvgy8" path="res://game/scripts/controllers/StageRotator.gd" id="1_4rkpl"]
 [ext_resource type="Texture2D" uid="uid://oy8cxp2j2s80" path="res://icon.svg" id="1_yq07h"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3f7wr"]
@@ -53,7 +52,6 @@ size = Vector3(120, 50, 1)
 
 [node name="Level3" type="Node2D" unique_id=1384465659]
 position = Vector2(380, 577)
-script = ExtResource("1_4rkpl")
 
 [node name="LeftWall" type="StaticBody2D" parent="." unique_id=1836365264]
 position = Vector2(-192, 12)
