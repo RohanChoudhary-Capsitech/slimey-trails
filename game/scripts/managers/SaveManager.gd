@@ -207,3 +207,19 @@ func _log_error(msg: String) -> void:
 		var gs = tree.root.get_node_or_null("GameService")
 		if gs and gs.logger:
 			gs.logger.error(msg)
+func is_sound_enabled() -> bool:
+	var s: SettingsData = _settings_data()
+	return (s.music_enabled or s.sfx_enabled) if s else true
+
+func set_sound_enabled(enabled: bool) -> void:
+	if not settings:
+		return
+	settings.mutate(func(s: SettingsData) -> void:
+		s.music_enabled = enabled
+		s.sfx_enabled = enabled
+	)
+	save_game()
+	GameService.bus.sound_changed.emit(enabled)
+
+func _settings_data() -> SettingsData:
+	return settings.get_settings_data() if settings else null

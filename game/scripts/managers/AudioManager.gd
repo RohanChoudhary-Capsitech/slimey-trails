@@ -15,7 +15,8 @@ func _ready() -> void:
 
 	_setup_music_player()
 	_setup_sfx_pool()
-
+	GameService.bus.sound_changed.connect(_set_sound)
+	_apply_saved_sound.call_deferred()
 # ── Music ──────────────────────────────────────────────────────────────────
 
 func play_music(stream: AudioStream, volume_db: float = 0.0) -> void:
@@ -82,3 +83,9 @@ func _get_free_sfx_player() -> AudioStreamPlayer:
 func _on_sfx_finished(player: AudioStreamPlayer) -> void:
 	# PDF §4: disable the player once done — no idle CPU ticking
 	player.process_mode = Node.PROCESS_MODE_DISABLED
+func _apply_saved_sound() -> void:
+	_set_sound(GameService.save.is_sound_enabled())
+
+func _set_sound(enabled: bool) -> void:
+	mute(not enabled)
+	GameService.logger.info("AudioManager: sound", { "enabled": enabled })

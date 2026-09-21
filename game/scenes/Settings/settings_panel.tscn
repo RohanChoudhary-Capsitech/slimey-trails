@@ -1,0 +1,111 @@
+[gd_scene format=3 uid="uid://beyekuf86qjdv"]
+
+[ext_resource type="Texture2D" uid="uid://droojg8gooltv" path="res://game/assets/sprites/single/ui/GameOverBox.png" id="1_2vhfy"]
+[ext_resource type="Script" uid="uid://dw0saxc734fdm" path="res://game/scripts/settings_panel.gd" id="1_ja4bx"]
+[ext_resource type="Texture2D" uid="uid://cl2y02nfelno" path="res://game/assets/sprites/single/ui/Group.png" id="2_g8q0h"]
+[ext_resource type="Texture2D" uid="uid://bk8ctkk4xb42g" path="res://game/assets/sprites/single/ui/soundoff.jpg" id="3_ja4bx"]
+[ext_resource type="Texture2D" uid="uid://des1m0s4ncudl" path="res://game/assets/sprites/single/ui/musicon.png" id="5_r0h2r"]
+[ext_resource type="Texture2D" uid="uid://dfwh0df5mt8wh" path="res://game/assets/sprites/single/ui/musicoff.png" id="6_qodc8"]
+
+[node name="SettingsPanel" type="Control" unique_id=2067621675 node_paths=PackedStringArray("close_button", "_sound_on", "_sound_off")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ja4bx")
+close_button = NodePath("Panel/Back")
+_sound_on = NodePath("Panel/TextureRect/HBoxContainer/SoundOn")
+_sound_off = NodePath("Panel/TextureRect/HBoxContainer/SoundOff")
+
+[node name="Panel" type="Panel" parent="." unique_id=1736856166]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Back" type="Button" parent="Panel" unique_id=1370271959]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Panel" unique_id=673105518]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -264.75
+offset_top = -302.57147
+offset_right = 264.75
+offset_bottom = 302.57147
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_2vhfy")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="Panel/TextureRect" unique_id=1427689854]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -97.0
+offset_top = -54.84
+offset_right = 97.0
+offset_bottom = 14.16
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 50
+text = "Settings"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/TextureRect" unique_id=1421718880]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 4
+
+[node name="SoundOn" type="TextureButton" parent="Panel/TextureRect/HBoxContainer" unique_id=796885954]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+texture_normal = ExtResource("2_g8q0h")
+
+[node name="SoundOff" type="TextureButton" parent="Panel/TextureRect/HBoxContainer" unique_id=351123142]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+texture_normal = ExtResource("3_ja4bx")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="MusicBtnOn" type="TextureButton" parent="Panel/TextureRect/HBoxContainer" unique_id=2112847242]
+visible = false
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+texture_normal = ExtResource("5_r0h2r")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="MusicBtnOff" type="TextureButton" parent="Panel/TextureRect/HBoxContainer" unique_id=1255164694]
+visible = false
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+texture_normal = ExtResource("6_qodc8")
+ignore_texture_size = true
+stretch_mode = 0

@@ -38,6 +38,8 @@ signal sync_started
 signal sync_completed
 signal sync_failed(reason: String)
 
+signal sound_changed(enabled: bool)
+signal music_changed(enabled: bool)
 func _ready() -> void:
 	# Bridge DataManagerSignals if available
 	var data_signals = get_node_or_null("/root/DataManagerSignals")

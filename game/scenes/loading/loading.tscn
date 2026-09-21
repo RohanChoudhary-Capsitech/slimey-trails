@@ -3,8 +3,12 @@
 [ext_resource type="Texture2D" uid="uid://b1825psish25q" path="res://game/assets/sprites/single/ui/Rectangle 1622 (1).png" id="1_3yjxi"]
 [ext_resource type="Script" uid="uid://dkl6yaecxu2y4" path="res://game/scripts/loading.gd" id="1_8s8e3"]
 [ext_resource type="Texture2D" uid="uid://coewsr3gtbrvv" path="res://game/assets/sprites/single/ui/loader.png" id="2_8s8e3"]
+[ext_resource type="PackedScene" uid="uid://beyekuf86qjdv" path="res://game/scenes/Settings/settings_panel.tscn" id="2_q2xb7"]
+[ext_resource type="Texture2D" uid="uid://oy8cxp2j2s80" path="res://icon.svg" id="4_7ygt3"]
+[ext_resource type="Texture2D" uid="uid://b4ai38nhihdeh" path="res://game/assets/sprites/single/ui/Solid_green.png" id="5_q2xb7"]
+[ext_resource type="Texture2D" uid="uid://dxjk4nc4042ka" path="res://game/assets/sprites/single/ui/settings_icon_new.png" id="6_4uvt5"]
 
-[node name="Loading" type="Control" unique_id=324373757]
+[node name="Loading" type="Control" unique_id=324373757 node_paths=PackedStringArray("startBtn", "settingsBtn")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,6 +16,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_8s8e3")
+settings_panel = ExtResource("2_q2xb7")
+startBtn = NodePath("Panel/StartBtn")
+settingsBtn = NodePath("Panel/SettingsBtn")
 
 [node name="Panel" type="Panel" parent="." unique_id=1458677034]
 layout_mode = 1
@@ -22,6 +29,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="Panel" unique_id=449095162]
+visible = false
 propagate_maximum_size = true
 layout_mode = 1
 anchors_preset = 8
@@ -40,6 +48,7 @@ texture_under = ExtResource("1_3yjxi")
 texture_progress = ExtResource("2_8s8e3")
 
 [node name="Label" type="Label" parent="Panel" unique_id=2106494521]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -54,3 +63,63 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 50
 text = "Loading......."
+
+[node name="TextureRect" type="TextureRect" parent="Panel" unique_id=1177395637]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -151.0
+offset_top = -408.0
+offset_right = 151.0
+offset_bottom = -106.00073
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_7ygt3")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="StartBtn" type="TextureButton" parent="Panel" unique_id=937365013]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -163.0
+offset_top = -56.0
+offset_right = 163.0
+offset_bottom = 56.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("5_q2xb7")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Panel/StartBtn" unique_id=816243013]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 50
+text = "Start"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SettingsBtn" type="TextureButton" parent="Panel" unique_id=2072808368]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -113.0
+offset_top = 26.0
+offset_right = -29.0
+offset_bottom = 110.0
+grow_horizontal = 0
+texture_normal = ExtResource("6_4uvt5")
+ignore_texture_size = true
+stretch_mode = 4
